@@ -22,7 +22,6 @@ import org.hibernate.Transaction;
 /**
  * @since JavaSE-1.8
  */
-//Leftoff Updating DB methods and doing connection validation
 public class UtilDBPeterson {
    static SessionFactory sessionFactory = null;
 
@@ -62,8 +61,8 @@ public class UtilDBPeterson {
    }
 
    
-   //Retrieves all Rentals with keyword by FirstName
-   public static List<Rental> listRentalsbyFirstName(String keyword) {
+   //Retrieves all Rentals with keyword by CarMake
+   public static List<Rental> listRentalsByCarMake(String keyword) {
       List<Rental> resultList = new ArrayList<Rental>();
 
       Session session = getSessionFactory().openSession();
@@ -76,7 +75,7 @@ public class UtilDBPeterson {
          List<?> rentals = session.createQuery("FROM Rental").list();
          for (Iterator<?> iterator = rentals.iterator(); iterator.hasNext();) {
             Rental rent = (Rental) iterator.next();
-            if (rent.getFirstName().startsWith(keyword)) {
+            if (rent.getCarMake().startsWith(keyword)) {
                resultList.add(rent);
             }
          }
@@ -92,7 +91,7 @@ public class UtilDBPeterson {
    }
 
  //Creates Rental and commits it to DB
-   public static void createEmployees(String make,String model, Integer year) {
+   public static void createRental(String make,String model, Integer year) {
       Session session = getSessionFactory().openSession();
       Transaction tx = null;
       try {

@@ -10,10 +10,17 @@ import javax.persistence.Table;
 
 /**
  * @since J2SE-1.8
- CREATE TABLE employee (
+ CREATE TABLE rental (
   id INT NOT NULL AUTO_INCREMENT,    
-  name VARCHAR(30) NOT NULL,   
-  age INT NOT NULL,    
+  carMake VARCHAR(30) NOT NULL,
+  carModel VARCHAR(30) NOT NULL,
+  carYear INT NOT NULL,   
+  firstName VARCHAR(30) NOT NULL,
+  lastName VARCHAR(30) NOT NULL,
+  phone VARCHAR(30) NOT NULL,
+  email VARCHAR(30) NOT NULL,
+  startDate VARCHAR(30) NOT NULL,
+  endDate VARCHAR(30) NOT NULL,   
   PRIMARY KEY (id));
  */
 @Entity
@@ -86,7 +93,6 @@ public class Rental {
 	   this.lastName = null;
 	   this.phone = null;
 	   this.email = null;
-	   
 	   this.startDate = null;
 	   this.endDate = null;
    }
