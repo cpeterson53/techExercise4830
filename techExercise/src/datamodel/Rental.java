@@ -8,13 +8,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import util.UtilDBPeterson;
+
 /**
  * @since J2SE-1.8
  CREATE TABLE rental (
   id INT NOT NULL AUTO_INCREMENT,    
   carMake VARCHAR(30) NOT NULL,
   carModel VARCHAR(30) NOT NULL,
-  carYear INT NOT NULL,   
+  carYear INT NOT NULL,
+  carImage VARCHAR(200) NOT NULL,  
   firstName VARCHAR(30) NOT NULL,
   lastName VARCHAR(30) NOT NULL,
   phone VARCHAR(30) NOT NULL,
@@ -41,6 +44,9 @@ public class Rental {
    
    @Column(name = "carYear")
    private Integer carYear;
+   
+   @Column(name = "carImage")
+   private String carImage;
    
    //Taken
    @Column(name = "firstName")
@@ -72,20 +78,35 @@ public class Rental {
 	      this.carYear = year;
 	   }
    
+   public Rental(String make, String model, Integer year, String carImage) {
+	      this.carMake = make;
+	      this.carModel = model;
+	      this.carYear = year;
+	      this.carImage = carImage;
+	   }
+   
    //Taken Rental
    public void Rent(String firstName, String lastName, String phone, String email) {
-	      this.firstName = firstName;
-	      this.lastName = lastName;
-	      this.phone = phone;
-	      this.email = email;
-	      
-	      Calendar calendar = Calendar.getInstance();
-	      SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-	      this.startDate = sdf.format(calendar.getTime());
-	      calendar.add(Calendar.DATE, 7);
-	      this.endDate = sdf.format(calendar.getTime());
-	      //Logic for endDate
+	   if(this.isAvailable())
+	   {
+	   		  this.firstName = firstName;
+		      this.lastName = lastName;
+		      this.phone = phone;
+		      this.email = email;
+		      
+		      Calendar calendar = Calendar.getInstance();
+		      SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		      this.startDate = sdf.format(calendar.getTime());
+		      calendar.add(Calendar.DATE, 7);
+		      this.endDate = sdf.format(calendar.getTime());
+		      UtilDBPeterson.UpdateRental(this);
 	   }
+	   else
+	   {
+		   System.out.println("Attempt to Rent" + this.carMake + ", " + this.carModel + ", " + this.carYear + this.firstName);
+	   }
+	   
+   }
 
    public void makeAvailable()
    {
@@ -95,6 +116,12 @@ public class Rental {
 	   this.email = null;
 	   this.startDate = null;
 	   this.endDate = null;
+	   UtilDBPeterson.UpdateRental(this);
+   }
+   
+   public boolean isAvailable()
+   {
+	   return firstName == null;
    }
    
 public Integer getId() {
@@ -144,6 +171,10 @@ public Integer getCarYear() {
 	return carYear;
 }
 
+public String getCarImage()
+{
+	return carImage;
+}
 
 public void setId(Integer id) {
 	this.id = id;
@@ -193,6 +224,10 @@ public void setCarYear(Integer carYear) {
 	this.carYear = carYear;
 }
 
+public void setCarImage(String carImage)
+{
+	this.carImage = carImage;
+}
    @Override
    public String toString() {
       if(this.firstName == null)

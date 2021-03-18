@@ -47,7 +47,7 @@ public class UtilDBPeterson {
          List<?> rentals = session.createQuery("FROM Rental").list();
          for (Iterator<?> iterator = rentals.iterator(); iterator.hasNext();) {
             Rental rent = (Rental) iterator.next();
-            resultList.add(rent);
+            if (rent.isAvailable()) resultList.add(rent);
          }
          tx.commit();
       } catch (HibernateException e) {
@@ -75,7 +75,7 @@ public class UtilDBPeterson {
          List<?> rentals = session.createQuery("FROM Rental").list();
          for (Iterator<?> iterator = rentals.iterator(); iterator.hasNext();) {
             Rental rent = (Rental) iterator.next();
-            if (rent.getCarMake().startsWith(keyword)) {
+            if (rent.isAvailable() && rent.getCarMake().startsWith(keyword)) {
                resultList.add(rent);
             }
          }
@@ -90,13 +90,62 @@ public class UtilDBPeterson {
       return resultList;
    }
 
+   
+   public static List<Rental> listRentalsByName(String keyword) {
+	      List<Rental> resultList = new ArrayList<Rental>();
+
+	      Session session = getSessionFactory().openSession();
+	      Transaction tx = null;
+
+	      try {
+	         tx = session.beginTransaction();
+	         System.out.println((Rental)session.get(Rental.class, 1)); // use "get" to fetch data
+	        // Query q = session.createQuery("FROM Employee");
+	         List<?> rentals = session.createQuery("FROM Rental").list();
+	         for (Iterator<?> iterator = rentals.iterator(); iterator.hasNext();) {
+	            Rental rent = (Rental) iterator.next();
+	            if (rent.getFirstName() != null && rent.getFirstName().startsWith(keyword)) {
+	               resultList.add(rent);
+	            }
+	         }
+	         tx.commit();
+	      } catch (HibernateException e) {
+	         if (tx != null)
+	            tx.rollback();
+	         e.printStackTrace();
+	      } finally {
+	         session.close();
+	      }
+	      return resultList;
+	   }
+   public static Rental getRentalById(String id) {
+	      Rental rental = null;
+	      Session session = getSessionFactory().openSession();
+	      Transaction tx = null;
+	      try {
+	         tx = session.beginTransaction();
+	         System.out.println((Rental)session.get(Rental.class, 1)); // use "get" to fetch data
+	        // Query q = session.createQuery("FROM Employee");
+	         rental =(Rental) session.createQuery("FROM Rental R WHERE R.id = " + id).list().get(0);
+	         tx.commit();
+	      } catch (HibernateException e) {
+	         if (tx != null)
+	            tx.rollback();
+	         e.printStackTrace();
+	      } finally {
+	         session.close();
+	      }
+	      return rental;
+	   }
+   
+   
  //Creates Rental and commits it to DB
-   public static void createRental(String make,String model, Integer year) {
+   public static void createRental(String make,String model, Integer year , String img) {
       Session session = getSessionFactory().openSession();
       Transaction tx = null;
       try {
          tx = session.beginTransaction();
-         session.save(new Rental(make, model,year));
+         session.save(new Rental(make, model,year, img));
          tx.commit();
       } catch (HibernateException e) {
          if (tx != null)
@@ -106,4 +155,20 @@ public class UtilDBPeterson {
          session.close();
       }
    }
+   
+   public static void UpdateRental(Rental rent) {
+	      Session session = getSessionFactory().openSession();
+	      Transaction tx = null;
+	      try {
+	         tx = session.beginTransaction();
+	         session.saveOrUpdate(rent);
+	         tx.commit();
+	      } catch (HibernateException e) {
+	         if (tx != null)
+	            tx.rollback();
+	         e.printStackTrace();
+	      } finally {
+	         session.close();
+	      }
+	   }
 }

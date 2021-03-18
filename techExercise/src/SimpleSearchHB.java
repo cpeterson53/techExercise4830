@@ -21,42 +21,67 @@ public class SimpleSearchHB extends HttpServlet implements Info {
    }
 
    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-      String keyword = request.getParameter("keyword").trim();
-
+      String keyword = request.getParameter("keyword");
+      //Second Search Parameter
+      String myRentals = request.getParameter("myRentals");
       response.setContentType("text/html");
       PrintWriter out = response.getWriter();
-      String title = "Database Result";
+      String title, color;
+      List<Rental> listRentals = null;
+      boolean flagRent;
+      if(keyword != null && !keyword.isEmpty())
+      {
+    	  keyword = keyword.trim();
+    	  title = "Available Rentals";
+    	  color = "\"#f0f0f0\"";
+	      listRentals = UtilDBPeterson.listRentalsByCarMake(keyword);
+	      flagRent = true;
+      }
+      else if(myRentals != null && !myRentals.isEmpty())
+      {
+    	  myRentals = myRentals.trim();
+    	  title = "My Rentals";
+    	  color = "\"#fff\"";
+	      listRentals = UtilDBPeterson.listRentalsByName(myRentals);
+    	  flagRent = false;
+      }
+      else
+      {
+    	  title = "Available Rentals";
+    	  color = "\"#f0f0f0\"";
+    	  flagRent = true;
+    	  listRentals = UtilDBPeterson.listRentals();
+      }
       String docType = "<!doctype html public \"-//w3c//dtd html 4.0 transitional//en\">\n"; //
       out.println(docType + //
             "<html>\n" + //
             "<head><title>" + title + "</title></head>\n" + //
-            "<body bgcolor=\"#f0f0f0\">\n" + //
+            "<body bgcolor=" + color + ">\n" + //
             "<h1 align=\"center\">" + title + "</h1>\n");
-      out.println("<ul>");
-
-      List<Rental> listRentals = null;
-      if (keyword != null && !keyword.isEmpty()) {
-         listRentals = UtilDBPeterson.listRentalsByCarMake(keyword);
-      } else {
-         listRentals = UtilDBPeterson.listRentals();
-      }
-      display(listRentals, out);
-      out.println("</ul>");
+      display(listRentals, out, flagRent);
       out.println("<a href=/" + projectName + "/" + searchWebName + ">Search Data</a> <br>");
       out.println("</body></html>");
    }
 
-   void display(List<Rental> listEmployees, PrintWriter out) {
-      for (Rental rent : listEmployees) {
-         System.out.println("[DBG] " + rent.getId() + ", " //
-               + rent.getCarMake() + ", " //
-               + rent.getCarModel() + ", " //
-               + rent.getCarYear());
-
-         out.println("<li>" + rent.getId() + ", " //
-               + rent.getCarMake() + ", " //
-               + rent.getCarModel() + ", " //
-               + rent.getCarYear() + "</li>");
+   void display(List<Rental> listRentals, PrintWriter out, boolean flagRent) {
+      for (Rental rent : listRentals) {
+    	  out.println("<section>" + 
+    		"<img src=" + rent.getCarImage() + "></img>" +
+    		"<h4>MAKE:" + rent.getCarMake() + "<h4><br>" +
+    		"<h4>MODEL:" + rent.getCarModel() + "<h4><br>" + 
+    		"<h4>YEAR:" + rent.getCarYear() + "<h4><br>" +
+    		(flagRent?
+    			"<a href=/" + projectName + "/rent/" + rent.getId() + ">Rent!</a>" : 
+    			"<form action=\"/techExercise/rent/" + rent.getId() + "?return=true\" method=\"POST\"> <input type=\"submit\" value=\"Return!\" /></form>"));
+//         System.out.println("[DBG] " + rent.getId() + ", " //
+//               + rent.getCarMake() + ", " //
+//               + rent.getCarModel() + ", " //
+//               + rent.getCarYear());
+//
+//         out.println("<li>" + rent.getId() + ", " //
+//               + rent.getCarMake() + ", " //
+//               + rent.getCarModel() + ", " //
+//               + rent.getCarYear() + "</li>");
       }
    }
 
