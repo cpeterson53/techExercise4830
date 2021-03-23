@@ -95,7 +95,7 @@ public class Rental {
 		      this.email = email;
 		      
 		      Calendar calendar = Calendar.getInstance();
-		      SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		      SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		      this.startDate = sdf.format(calendar.getTime());
 		      calendar.add(Calendar.DATE, 7);
 		      this.endDate = sdf.format(calendar.getTime());

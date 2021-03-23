@@ -60,12 +60,15 @@ public class SimpleSearchHB extends HttpServlet implements Info {
       for (Rental rent : listRentals) {
     	  out.println("<section class='accent result'>" + 
     		"<div class='imagebound' style='background-image:url(" + rent.getCarImage() + ");'></div>" +
-    		"<h4>MAKE:" + rent.getCarMake() + "<h4>" +
-    		"<h4>MODEL:" + rent.getCarModel() + "<h4>" + 
-    		"<h4>YEAR:" + rent.getCarYear() + "<h4>" +
+    		"<h4>MAKE :" + rent.getCarMake() + "<h4>" +
+    		"<h4>MODEL :" + rent.getCarModel() + "<h4>" + 
+    		"<h4>YEAR :" + rent.getCarYear() + "<h4>" +
     		(flagRent?
     			"<a class='rentbutton' href=/" + projectName + "/rent/" + rent.getId() + ">Rent!</a>" : 
-    			"<form action=\"/techExercise/rent/" + rent.getId() + "?return=true\" method=\"POST\"> <input type=\"submit\" value=\"Return!\" /></form>")
+    			("<h4>Start Lease :" + rent.getStartDate() + "<h4>" +
+    			  "<h4>End Lease :" + rent.getEndDate() + "<h4>" +
+    	            "<form action=\"/techExercise/rent/" + rent.getId() + "?return=true\" method=\"POST\"> <input type=\"submit\" value=\"Return!\" /></form>"))
+    		
     		+ "</section>");
 //         System.out.println("[DBG] " + rent.getId() + ", " //
 //               + rent.getCarMake() + ", " //
