@@ -51,7 +51,7 @@ public class UtilDBPeterson {
          }
          tx.commit();
       } catch (HibernateException e) {
-         if (tx != null)
+         if (tx != null && tx.isActive())
             tx.rollback();
          e.printStackTrace();
       } finally {
@@ -81,7 +81,7 @@ public class UtilDBPeterson {
          }
          tx.commit();
       } catch (HibernateException e) {
-         if (tx != null)
+         if (tx != null && tx.isActive())
             tx.rollback();
          e.printStackTrace();
       } finally {
@@ -110,7 +110,7 @@ public class UtilDBPeterson {
 	         }
 	         tx.commit();
 	      } catch (HibernateException e) {
-	         if (tx != null)
+	         if (tx != null && tx.isActive())
 	            tx.rollback();
 	         e.printStackTrace();
 	      } finally {
@@ -129,7 +129,7 @@ public class UtilDBPeterson {
 	         rental =(Rental) session.createQuery("FROM Rental R WHERE R.id = " + id).list().get(0);
 	         tx.commit();
 	      } catch (HibernateException e) {
-	         if (tx != null)
+	         if (tx != null && tx.isActive())
 	            tx.rollback();
 	         e.printStackTrace();
 	      } finally {
@@ -148,7 +148,7 @@ public class UtilDBPeterson {
          session.save(new Rental(make, model,year, img));
          tx.commit();
       } catch (HibernateException e) {
-         if (tx != null)
+         if (tx != null && tx.isActive())
             tx.rollback();
          e.printStackTrace();
       } finally {
@@ -164,7 +164,7 @@ public class UtilDBPeterson {
 	         session.saveOrUpdate(rent);
 	         tx.commit();
 	      } catch (HibernateException e) {
-	         if (tx != null)
+	         if (tx != null && tx.isActive())
 	            tx.rollback();
 	         e.printStackTrace();
 	      } finally {
