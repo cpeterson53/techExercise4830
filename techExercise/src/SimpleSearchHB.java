@@ -60,9 +60,9 @@ public class SimpleSearchHB extends HttpServlet implements Info {
       for (Rental rent : listRentals) {
     	  out.println("<section class='accent result'>" + 
     		"<div class='imagebound' style='background-image:url(" + rent.getCarImage() + ");'></div>" +
-    		"<h4>MAKE :" + rent.getCarMake() + "<h4>" +
-    		"<h4>MODEL :" + rent.getCarModel() + "<h4>" + 
-    		"<h4>YEAR :" + rent.getCarYear() + "<h4>" +
+    		"<h4>MAKE: " + rent.getCarMake() + "<h4>" +
+    		"<h4>MODEL: " + rent.getCarModel() + "<h4>" + 
+    		"<h4>YEAR: " + rent.getCarYear() + "<h4>" +
     		(flagRent?
     			"<a class='rentbutton' href=/" + projectName + "/rent/" + rent.getId() + ">Rent!</a>" : 
     			("<h4>Start Lease :" + rent.getStartDate() + "<h4>" +
