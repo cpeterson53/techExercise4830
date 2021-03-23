@@ -57,7 +57,7 @@ public class SimpleInsertHB extends HttpServlet implements Info {
 		   rental.Rent(firstname, lastname, phone, email);
 		   response.setContentType("text/html");
 		   PrintWriter out = response.getWriter();   
-		   //UtilDBPeterson.rent(make, model, year); Change to rent indiv car
+		   
 		      
 		      String title = "Database Result";
 		      String docType = "<!doctype html public \"-//w3c//dtd html 4.0 transitional//en\">\n"; //
@@ -68,7 +68,7 @@ public class SimpleInsertHB extends HttpServlet implements Info {
 		      out.println("<li> Make: " + rental.getCarMake());
 		      out.println("<li> Model: " + rental.getCarModel());
 		      out.println("<li> Model: " + rental.getCarYear());
-		      out.println("<hr>"); //fix this someone please
+		      out.println("<hr>");
 		      out.println("<li> First Name: " + rental.getFirstName());
 		      out.println("<li> Last Name: " + rental.getLastName());
 		      out.println("<li> Phone Number: " + rental.getPhone());
