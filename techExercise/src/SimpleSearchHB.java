@@ -26,14 +26,13 @@ public class SimpleSearchHB extends HttpServlet implements Info {
       String myRentals = request.getParameter("myRentals");
       response.setContentType("text/html");
       PrintWriter out = response.getWriter();
-      String title, color;
+      String title;
       List<Rental> listRentals = null;
       boolean flagRent;
       if(keyword != null && !keyword.isEmpty())
       {
     	  keyword = keyword.trim();
-    	  title = "Available Rentals";
-    	  color = "\"#f0f0f0\"";
+    	  title = "Available Rentals";;
 	      listRentals = UtilDBPeterson.listRentalsByCarMake(keyword);
 	      flagRent = true;
       }
@@ -41,38 +40,33 @@ public class SimpleSearchHB extends HttpServlet implements Info {
       {
     	  myRentals = myRentals.trim();
     	  title = "My Rentals";
-    	  color = "\"#fff\"";
 	      listRentals = UtilDBPeterson.listRentalsByName(myRentals);
     	  flagRent = false;
       }
       else
       {
     	  title = "Available Rentals";
-    	  color = "\"#f0f0f0\"";
     	  flagRent = true;
     	  listRentals = UtilDBPeterson.listRentals();
       }
-      String docType = "<!doctype html public \"-//w3c//dtd html 4.0 transitional//en\">\n"; //
-      out.println(docType + //
-            "<html>\n" + //
-            "<head><title>" + title + "</title></head>\n" + //
-            "<body bgcolor=" + color + ">\n" + //
-            "<h1 align=\"center\">" + title + "</h1>\n");
+      String docType = "<!doctype html public \'-//w3c//dtd html 4.0 transitional//en\'><html><head><title>"+title+"</title><link rel='stylesheet' href='main.css'></head>";
+      out.println(docType +
+    		  "<body><header><nav><a href='/techExercise/simpleSearchHB.html'>&lt; Back to Search</a></nav><h1 class='accent'>"+title+"</h1></header><main>");
       display(listRentals, out, flagRent);
-      out.println("<a href=/" + projectName + "/" + searchWebName + ">Search Data</a> <br>");
-      out.println("</body></html>");
+      out.println("</main></body></html>");
    }
 
    void display(List<Rental> listRentals, PrintWriter out, boolean flagRent) {
       for (Rental rent : listRentals) {
-    	  out.println("<section>" + 
-    		"<img src=" + rent.getCarImage() + "></img>" +
-    		"<h4>MAKE:" + rent.getCarMake() + "<h4><br>" +
-    		"<h4>MODEL:" + rent.getCarModel() + "<h4><br>" + 
-    		"<h4>YEAR:" + rent.getCarYear() + "<h4><br>" +
+    	  out.println("<section class='accent result'>" + 
+    		"<div class='imagebound' style='background-image:url(" + rent.getCarImage() + ");'></div>" +
+    		"<h4>MAKE:" + rent.getCarMake() + "<h4>" +
+    		"<h4>MODEL:" + rent.getCarModel() + "<h4>" + 
+    		"<h4>YEAR:" + rent.getCarYear() + "<h4>" +
     		(flagRent?
-    			"<a href=/" + projectName + "/rent/" + rent.getId() + ">Rent!</a>" : 
-    			"<form action=\"/techExercise/rent/" + rent.getId() + "?return=true\" method=\"POST\"> <input type=\"submit\" value=\"Return!\" /></form>"));
+    			"<a class='rentbutton' href=/" + projectName + "/rent/" + rent.getId() + ">Rent!</a>" : 
+    			"<form action=\"/techExercise/rent/" + rent.getId() + "?return=true\" method=\"POST\"> <input type=\"submit\" value=\"Return!\" /></form>")
+    		+ "</section>");
 //         System.out.println("[DBG] " + rent.getId() + ", " //
 //               + rent.getCarMake() + ", " //
 //               + rent.getCarModel() + ", " //

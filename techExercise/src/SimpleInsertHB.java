@@ -62,10 +62,8 @@ public class SimpleInsertHB extends HttpServlet implements Info {
 		      String title = "Database Result";
 		      String docType = "<!doctype html public \"-//w3c//dtd html 4.0 transitional//en\">\n"; //
 		      out.println(docType + //
-		            "<html>\n" + //
-		            "<head><title>" + title + "</title></head>\n" + //
-		            "<body bgcolor=\"#f0f0f0\">\n" + //
-		            "<h1 align=\"center\">" + title + "</h1>\n");
+		    		  "<head><link rel='stylesheet' href='/techExercise/main.css'></head>" +
+		    		  "<body><header><nav><a href=\"/techExercise/simpleSearchHB.html\">&lt; Back to Search</a></nav><h1 class='accent'>"+title+"</h1></header><main><section class=\"accent\">");
 		      out.println("<ul>");
 		      out.println("<li> Make: " + rental.getCarMake());
 		      out.println("<li> Model: " + rental.getCarModel());
@@ -76,8 +74,15 @@ public class SimpleInsertHB extends HttpServlet implements Info {
 		      out.println("<li> Phone Number: " + rental.getPhone());
 		      out.println("<li> Email: " + rental.getEmail());
 		      out.println("</ul>");
-		      out.println("<a href=/" + projectName + "/" + searchWebName + ">Search Data</a> <br>");
-		      out.println("</body></html>");
+		      out.println("</section>\n" + 
+		      		"    </main>\n" + 
+		      		"\n" + 
+		      		"    <footer class=\"accent\">\n" + 
+		      		"        ©Connor Peterson 2021\n" + 
+		      		"    </footer>\n" + 
+		      		"</body>\n" + 
+		      		"\n" + 
+		      		"</html>");
 	   }
 	   else
 	   {

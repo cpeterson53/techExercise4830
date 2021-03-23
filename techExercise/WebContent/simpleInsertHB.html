@@ -1,60 +1,43 @@
 <html>
+
 <head>
-<style>
-header {
-    background-color:black;
-    color:white;
-    text-align:center;
-    padding:5px;	 
-}
-nav {
-    line-height:30px;
-    background-color:#eeeeee;
-    height:300px;
-    width:100px;
-    float:left;
-    padding:5px;	      
-}
-section {
-    width:350px;
-    float:left;
-    padding:10px;	 	 
-}
-footer {
-    background-color:black;
-    color:white;
-    clear:both;
-    text-align:center;
-    padding:5px;	 	 
-}
-</style>
+    <link rel="stylesheet" href="/techExercise/main.css">
+    <style>
+        section {
+            height: 400px;
+        }
+    </style>
 </head>
 
 <body>
-<header>
-<h1> Insert Data (Hibernate)</h1>
-</header>
+    <header>
+        <nav><a href="/techExercise/simpleSearchHB.html">&lt; Back to Search</a></nav>
+        <h1 class="accent">Rent Vehicle</h1>
+    </header>
 
-<nav>
-<a href="/techExercise/simpleSearchHB.html">Search Data</a> <br>
-</nav>
+    <main>
+        <section class="accent">
+            <h1>User Input</h1>
 
-<section>
-	<h1>User Input</h1>
-	
-	<form action="/techExercise/rent%%postto%%" method="POST">
-	
-		First Name: <input type="text" name="firstname"> <br />
-		Last Name: <input type="text" name="lastname"> <br />
-		Phone: <input type="text" name="phone"> <br />
-		Email: <input type="text" name="email"> <br />
-		<input type="submit" value="Submit" />
-	</form>
+            <form action="/techExercise/rent%%postto%%" method="POST">
 
-</section>
+                <label for="fname">First Name:</label> 
+                <input type="text" name="firstname" id="fname"> <br />
+                <label for="lname">Last Name:</label>
+                <input type="text" name="lastname" id="lname"> <br />
+                <label for="phone">Phone:</label>
+                <input type="text" name="phone" id="phone"> <br />
+                <label for="email">Email:</label>
+                <input type="text" name="email" id="email"> <br />
+                <input type="submit" value="Submit" />
+            </form>
 
-<footer>
-Copyright
-</footer>
+        </section>
+    </main>
+
+    <footer class="accent">
+        ©Connor Peterson 2021
+    </footer>
 </body>
+
 </html>
