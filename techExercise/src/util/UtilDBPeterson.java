@@ -51,7 +51,7 @@ public class UtilDBPeterson {
          }
          tx.commit();
       } catch (HibernateException e) {
-         if (tx != null && tx.isActive())
+         if (tx != null)
             tx.rollback();
          e.printStackTrace();
       } finally {
@@ -81,7 +81,7 @@ public class UtilDBPeterson {
          }
          tx.commit();
       } catch (HibernateException e) {
-         if (tx != null && tx.isActive())
+         if (tx != null)
             tx.rollback();
          e.printStackTrace();
       } finally {
@@ -110,7 +110,7 @@ public class UtilDBPeterson {
 	         }
 	         tx.commit();
 	      } catch (HibernateException e) {
-	         if (tx != null && tx.isActive())
+	         if (tx != null)
 	            tx.rollback();
 	         e.printStackTrace();
 	      } finally {
@@ -148,14 +148,14 @@ public class UtilDBPeterson {
          session.save(new Rental(make, model,year, img));
          tx.commit();
       } catch (HibernateException e) {
-         if (tx != null && tx.isActive())
+         if (tx != null)
             tx.rollback();
          e.printStackTrace();
       } finally {
          session.close();
       }
    }
-   
+   //added tx.isactive to each if statement to try and combat rollback exception
    public static void UpdateRental(Rental rent) {
 	      Session session = getSessionFactory().openSession();
 	      Transaction tx = null;
@@ -164,7 +164,7 @@ public class UtilDBPeterson {
 	         session.saveOrUpdate(rent);
 	         tx.commit();
 	      } catch (HibernateException e) {
-	         if (tx != null && tx.isActive())
+	         if (tx != null)
 	            tx.rollback();
 	         e.printStackTrace();
 	      } finally {
